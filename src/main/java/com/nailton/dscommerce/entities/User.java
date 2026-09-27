@@ -3,7 +3,9 @@ package com.nailton.dscommerce.entities;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,6 +21,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	@Column(unique = true)
 	private String email;
 	private String phone;
 	private LocalDate birthDate;
@@ -89,6 +92,23 @@ public class User {
 
 	public List<Order> getOrders() {
 		return orders;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User user = (User) obj;
+		return Objects.equals(id, user.id);
 	}
 	
 	
